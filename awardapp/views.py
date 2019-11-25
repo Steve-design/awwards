@@ -26,3 +26,18 @@ def homepage(request):
         "ratings":ratings,
     }
     return render(request, 'index.html', context)
+
+@login_required(login_url='/accounts/login/')
+def add_post(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = UploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user_profile = current_user
+            post.save()
+        return redirect('homepage')
+
+    else:
+        form = UploadForm()
+    return render(request, 'upload.html', {"form": form})    
