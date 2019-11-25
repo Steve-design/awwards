@@ -1,3 +1,3 @@
 Hello {{name}}
 
-Welcome to the Mzalendo Awwaards. You will find the most exciting projects  from different content developers all over. VIew and Rate.
+Welcome to the Mzalendo Awwaards. You will find the most exciting projects  from different content developers all over. View and Rate.
