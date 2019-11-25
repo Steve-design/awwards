@@ -64,6 +64,10 @@ def add_profile(request):
             profile.save()
         return redirect('homepage')
 
+    else:
+        form = NewProfileForm()
+    return render(request, 'new_profile.html', {"form": form})
+
 def search_results(request):
 
     if 'post' in request.GET and request.GET["post"]:
