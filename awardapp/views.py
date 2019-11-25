@@ -209,3 +209,18 @@ class PostDescription(APIView):
         post = self.get_post(pk)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)               
+
+def awwaards_today(request):
+    if request.method == 'POST':
+        form = NewsLetterForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['your_name']
+            email = form.cleaned_data['email']
+
+            recipient = NewsLetterRecipients(name = name,email =email)
+            recipient.save()
+            send_welcome_email(name,email)
+
+            HttpResponseRedirect('awwaards_today')
+            #.................
+    return render(request, 'all-awwaards/index.html', {"date": date,"awwaards":awwaards,"letterForm":form}) 
