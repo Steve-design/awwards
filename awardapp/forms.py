@@ -13,4 +13,9 @@ class RatingsForm(forms.ModelForm):
 class NewProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ['user']         
+        exclude = ['user']     
+
+class UploadForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        exclude = ['user_profile', 'profile']            
