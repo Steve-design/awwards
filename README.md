@@ -2,9 +2,6 @@
 
 This application was built by Django version 1.11 a python framework.
 
-
-#### 13th October 2018
-
 #### By [Stephen Mwanza](https://github.com/Steve-design)
 
 ### Description
