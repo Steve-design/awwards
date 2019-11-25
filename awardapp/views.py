@@ -41,3 +41,14 @@ def add_post(request):
     else:
         form = UploadForm()
     return render(request, 'upload.html', {"form": form})    
+
+@login_required(login_url='/accounts/login/')
+def profile(request, username):
+    profile = User.objects.get(username=username)
+    try:
+        profile_info = Profile.get_profile(profile.id)
+    except:
+        profile_info = Profile.filter_by_id(profile.id)
+    posts = Post.get_profile_image(profile.id)
+    title = f'@{profile.username}'
+    return render(request, 'profile.html', {'title':title, 'profile':profile, 'profile_info':profile_info, 'posts':posts})    
