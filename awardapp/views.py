@@ -77,9 +77,7 @@ def search_results(request):
         message = "Please enter a search term"
         return render(request, 'search.html',{"message":message})        
 
-    else:
-        form = NewProfileForm()
-    return render(request, 'new_profile.html', {"form": form})   
+      
 
 def get_individual_post(request, post_id):
     post = Post.objects.get(id=post_id)
