@@ -8,4 +8,9 @@ class NewsLetterForm(forms.Form):
 class RatingsForm(forms.ModelForm):
     class Meta:
         model = Ratings
-        exclude = ['post_rated', 'score']    
+        exclude = ['post_rated', 'score']   
+
+class NewProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        exclude = ['user']         
