@@ -8,3 +8,6 @@ class Profile(models.Model):
     bio = HTMLField()
     contact = HTMLField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
+
+    def save_profile(self):
+        self.save()
