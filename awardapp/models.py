@@ -42,4 +42,38 @@ class Post(models.Model):
     live_link=models.URLField(blank=True)
     profile=models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     user_profile = models.ForeignKey(User,on_delete=models.CASCADE, related_name='posts',blank=True)
-    date = models.DateTimeField(auto_now_add=True)        
+    date = models.DateTimeField(auto_now_add=True)    
+
+    @classmethod
+    def search_by_name(cls,search_term):
+        posts = cls.objects.filter(name__icontains=search_term)
+        return posts
+
+    @classmethod
+    def one_post(cls, id):
+        post=Post.objects.filter(id=id)
+        return post
+
+    @classmethod
+    def all_posts(cls):
+        posts = cls.objects.all()
+        return posts
+
+    @classmethod
+    def get_user_posts(cls, profile_id):
+        images=Post.objects.filter(profile_id=id)
+
+    @classmethod
+    def get_profile_image(cls, profile):
+        posts = Post.objects.filter(user_profile__pk=profile)
+        return posts
+
+    @classmethod
+    def get_post_by_id(cls,id):
+        post = Post.objects.filter(id = Post.id)
+        return post
+
+    @classmethod
+    def get_all_profiles(cls):
+        profile = Profile.objects.all()
+        return profile    
