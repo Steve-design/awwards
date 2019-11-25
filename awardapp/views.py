@@ -64,6 +64,19 @@ def add_profile(request):
             profile.save()
         return redirect('homepage')
 
+def search_results(request):
+
+    if 'post' in request.GET and request.GET["post"]:
+        search_term = request.GET.get("post")
+        posts_results = Post.search_by_name(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'search.html',{"message":message,"posts": posts_results})
+
+    else:
+        message = "Please enter a search term"
+        return render(request, 'search.html',{"message":message})        
+
     else:
         form = NewProfileForm()
     return render(request, 'new_profile.html', {"form": form})      
