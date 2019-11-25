@@ -1,0 +1,95 @@
+{%extends 'base.html'%}
+{% block content %}
+{{ block.super}}
+{% load bootstrap4 %}
+{% load staticfiles%}
+
+
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<br>
+<br>
+<div class="container">
+
+  <div class="row">
+
+  <div class="col-md-4">
+
+        <div class="card border-secondary">
+                <div class="card-footer">
+
+      <img class="rounded-circle img-responsive" width="170" height="170" src="{{profile_info.avatar.url}}" size="">
+                    <br>
+
+
+                             <br>
+
+                          <p id="text" style="width:100%; padding-left:6px;">{{profile_info.user | upper}}</p>
+
+
+                                <div style="width:100%; padding-left:20px;padding-top:10px;" class="row">
+
+
+
+                 <p  id="text" style="width:100%; padding-left:6px;">{{posts | length }} posts</p>
+                                    <br>
+      <p id="text" style="margin-top:0px;">{{profile_info.bio | safe}}</p>
+
+                                          <p  id="text" style="margin-top:0px;">{{profile_info.contact | safe}}</p>
+
+
+            </div>
+
+
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-lg-8 col-md-10 mx-auto">
+
+
+  <div class="card-columns " >
+            {% for post in posts %}
+
+
+
+  <div class="card border-secondary">
+    <label id="text">{{post.name | safe}}</label>
+
+
+
+
+
+    <img class="card-img-top" src="{{post.image.url}}" class="img-responsive" alt="Image" type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{image.id}}">
+
+      <div class="middle">
+        <div class="button1 "><a id="text" style="color:white;" href="/post/{{post.id}}">view</a></div>
+      </div>
+<hr>
+<div style="width:100%; padding-left:20px;">
+<p id="text" style="margin-top:0;">Rating: {% for rating in post.ratings.all%}
+                          {% if forloop.counter is post.ratings.all.count %}
+                                          {{rating.score}}
+                          {% endif %}
+
+                              {% endfor %}
+
+                              </p>
+</div>
+
+  </div>
+      {% empty %}
+  <div class="row">
+    <h2 id="text" class="text-center">There are no posts here</h2>
+  </div>
+      {% endfor %}
+
+  </div>
+    </div>
+    </div>
+        </div>
+
+
+{% endblock %}
