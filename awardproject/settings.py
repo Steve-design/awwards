@@ -31,9 +31,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'awardapp'
-    'tinymce'
-    'bootstrap4'
+    'awardapp',
+    'tinymce',
+    'bootstrap4',
+     'rest_framework',
+    'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
