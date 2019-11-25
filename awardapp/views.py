@@ -51,4 +51,19 @@ def profile(request, username):
         profile_info = Profile.filter_by_id(profile.id)
     posts = Post.get_profile_image(profile.id)
     title = f'@{profile.username}'
-    return render(request, 'profile.html', {'title':title, 'profile':profile, 'profile_info':profile_info, 'posts':posts})    
+    return render(request, 'profile.html', {'title':title, 'profile':profile, 'profile_info':profile_info, 'posts':posts})  
+
+@login_required(login_url='/accounts/login/')
+def add_profile(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = current_user
+            profile.save()
+        return redirect('homepage')
+
+    else:
+        form = NewProfileForm()
+    return render(request, 'new_profile.html', {"form": form})      
