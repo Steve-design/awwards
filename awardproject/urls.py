@@ -19,4 +19,8 @@ from django.contrib.auth import views
 from rest_framework.authtoken.views import obtain_auth_token
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api-token-auth/', obtain_auth_token),
+    url(r'^accounts/', include('registration.backends.simple.urls')),
+    url(r'^tinymce/', include('tinymce.urls')),
+    url(r'^logout/$',views.logout, {"next_page": '/'}),
 ]
