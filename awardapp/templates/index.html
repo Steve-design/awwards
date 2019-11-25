@@ -1,0 +1,80 @@
+{%extends 'base.html'%}
+{% load bootstrap4 %}
+{% block content %}
+{{ block.super}}
+{% load staticfiles %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=K2D" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Grand+Hotel" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+<div class="container-fluid">
+  <h1 id="mainheading" style="text-align:center;" class="display-4"> Mzalendo Awwaards</h1>
+
+
+
+
+
+
+  <div class="card-columns" >
+    {% for post in posts%}
+
+    <div class="card border-secondary" style="height:470px">
+      <div class="container" style="height:350px;width:100%;padding:0px;">
+
+      <img class="card-img-top" src="{{post.image.url}}" alt="Card image cap" style="height:100%;">
+      <div class="middle">
+        <div class="button1 "><a id="text" style="color:white;" href="/post/{{post.id}}">View & Rate</a></div>
+      </div>
+
+    </div>
+
+      <div class="card-body">
+        <h5 id="text" class="card-title">{{post.name}}</h5>
+        <!--<p class="card-text">{{post.description | safe}}</p>-->
+        <p id="text" style="margin-bottom:0;">By <a style="width:100%; padding-left:10px;" href="{% url 'profile' username=post.user_profile.username %}">
+
+                <label>{{post.user_profile.username}}</label></a></p>
+                          <p id="text" style="margin-top:0;">Score: {% for rating in post.ratings.all%}
+                          {% if forloop.counter is post.ratings.all.count %}
+                                          {{rating.score}}/10
+                          {% endif %}
+
+                              {% endfor %}
+
+                              <span style="width:100%; padding-left:14em;">{{post.date|date}}</span></p>
+
+
+        <!-- <p>    <a href="/post/{{post.id}}"> View full post</a> -->
+</p>
+
+
+      </div>
+
+
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+</body>
+
+</html>
+
+{% endblock %}
