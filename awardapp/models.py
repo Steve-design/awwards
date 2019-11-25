@@ -100,4 +100,9 @@ class Ratings(models.Model):
     post_rated = models.ForeignKey(Post,on_delete=models.CASCADE, related_name='ratings',null=True)
 
     def save_comment(self):
-        self.save()        
+        self.save()   
+
+    @classmethod
+    def get_ratings(cls, id):
+        ratings = Ratings.objects.filter(post_id=id).all()
+        return ratings         
