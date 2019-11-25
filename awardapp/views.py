@@ -103,4 +103,67 @@ def get_individual_post(request, post_id):
         "post": post,
         "ratings": ratings,
     }
-    return render (request, 'post.html', {'post':post, 'post_id': post.id, "form": form})       
+    return render (request, 'post.html', {'post':post, 'post_id': post.id, "form": form})
+
+@login_required(login_url='/accounts/login/')
+def rate_post(request,pk):
+    [design, usability, content]=[[0],[0],[0]]
+
+    post = get_object_or_404(Post, pk=pk)
+    current_user = request.user
+    print (current_user)
+
+    print (current_user.id)
+    if request.method == 'POST':
+        form = RatingsForm(request.POST)
+        [design, usability, content] = [[0], [0], [0]]
+
+        if form.is_valid():
+            form.save()
+            rating = Ratings.objects.last()
+            design=rating.design
+            usability=rating.usability
+            content=rating.content
+            rating.post_rated = post
+            rating.save()
+
+
+            print (design, usability, content)
+            post_ratings = Ratings.objects.filter(post_rated=post)
+            post_design_ratings = [pr.design for pr in post_ratings]
+            print (post_design_ratings)
+            design_avg=0
+            for value in post_design_ratings:
+                design_avg += value
+            print (design_avg/len(post_design_ratings))
+            design_score= (design_avg/len(post_design_ratings))
+
+            post_usability_ratings = [pr.usability for pr in post_ratings]
+            print (post_usability_ratings)
+            usability_avg=0
+            for value in post_usability_ratings:
+                usability_avg += value
+            print (usability_avg/len(post_usability_ratings))
+            usability_score= (usability_avg/len(post_usability_ratings))
+
+            post_content_ratings = [pr.content for pr in post_ratings]
+            print (post_content_ratings)
+            content_avg = 0
+            for value in post_content_ratings:
+                content_avg += value
+            print (content_avg / len(post_content_ratings))
+            content_score = (content_avg / len(post_content_ratings))
+
+
+            score =(design_score + usability_score + content_score)/3
+
+            rating.score =score
+            rating.save()
+
+            score=rating.score
+            print ("last score=" + str(score))
+
+            return redirect('homepage')
+    else:
+        form = RatingsForm()
+        return render(request,'index.html',{"user":current_user,"ratings_form":form})           
